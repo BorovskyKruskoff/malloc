@@ -24,7 +24,7 @@ void *first_page(t_page *first, t_page *next, t_page *prev size_t size)
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	first->next = next;
 	first->prev = prev;
-	first->page_num = first->prev->page_num + 1;
+	first->page_num = 1;
 	first + sizepage =
 		create_block(size, first + sizepage, first + sizepage);
 }

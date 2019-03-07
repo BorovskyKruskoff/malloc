@@ -5,7 +5,7 @@
 
 typedef struct page
 {
-	size_t page_num = 0;
+	size_t page_num;
 	struct page *next;
 	struct page *prev;
 }t_page;
