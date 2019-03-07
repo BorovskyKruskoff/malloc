@@ -1,14 +1,13 @@
 #include "malloc.h"
 
-void *create_block(size_t size, void *next, void *prev)
+void create_block(void *adr, size_t size, void *next, void *prev)
 {
-	t_mem_block *block;
+	t_mem_block *block = adr;
 
 	block->size = size;
 	block->is_free = true;
 	block->next = next;
 	block->previous = previous
-	return (block);
 }
 
 void *first_page(t_page *first, t_page *next, t_page *prev size_t size)
@@ -25,8 +24,7 @@ void *first_page(t_page *first, t_page *next, t_page *prev size_t size)
 	first->next = next;
 	first->prev = prev;
 	first->page_num = 1;
-	first + sizepage =
-		create_block(size, first + sizepage, first + sizepage);
+	create_block(first + sizepage, size);
 }
 
 void *malloc(void *adr, size_t size)
