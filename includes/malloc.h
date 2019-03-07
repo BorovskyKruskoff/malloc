@@ -1,24 +1,22 @@
-#ifndef C_MALLOC
-# define C_MALLOC
+#ifndef MALLOC
+# define MALLOC
 
-# define MEMSIZE = 5000
 # include <sys/mman.h>
 
-struct page
+typedef struct page
 {
-	size_t num;
+	size_t page_num;
 	struct *page next;
 	struct *page prev;
-}
+}t_page;
 
-struct mem_block
+typedef struct mem_block
 {
-	size_t page;
 	size_t size;
 	bool is_free;
 	struct *mem_block prev;
 	struct *mem_block next;
-}
+}t_mem_block;
 
 void * malloc(void *adr, size_t size);
 //void * realloc(void *adr, size_t size);

@@ -1,6 +1,6 @@
-EXEC		= c_malloc
+EXEC		= malloc
 SRC_PATH	= srcs
-SRC_NAME	= c_malloc.c
+SRC_NAME	= malloc.c
 SRC		= $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ_PATH	= objs
 OBJ_NAME	= $(SRC_NAME:.c=.o)
