@@ -8,7 +8,7 @@ OBJ		= $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 DEPS_PATH	= includes
 INCLUDE		= $(addprefix -I,$(DEPS_PATH))
 MLXFLAGS	=
-FLAGS		= -Werror -Wextra -Wall -std=gnu99 -g -shared
+FLAGS		= -Werror -Wextra -Wall -std=gnu99 -g -shared -fPIC
 CFLAGS		= $(FLAGS) $(MLXFLAGS)
 LDFLAGS		=
 CC		= gcc

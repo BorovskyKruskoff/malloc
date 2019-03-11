@@ -4,10 +4,12 @@
 # define PAGESIZE 4096
 # include <stdbool.h>
 # include <sys/mman.h>
+# include <stddef.h>
 
 typedef struct page
 {
 	size_t page_num;
+	size_t size;
 	struct page *next;
 	struct page *prev;
 }t_page;
