@@ -7,8 +7,8 @@ OBJ_NAME	= $(SRC_NAME:.c=.o)
 OBJ		= $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 DEPS_PATH	= includes
 INCLUDE		= $(addprefix -I,$(DEPS_PATH))
-MLXFLAGS	= -lm -lmlx -lX11 -lXext
-FLAGS		= -Werror -Wextra -Wall -std=c99 -g -O0 -fdse
+MLXFLAGS	=
+FLAGS		= -Werror -Wextra -Wall -std=gnu99 -g -shared
 CFLAGS		= $(FLAGS) $(MLXFLAGS)
 LDFLAGS		=
 CC		= gcc

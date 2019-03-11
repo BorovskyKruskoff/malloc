@@ -1,6 +1,8 @@
 #ifndef MALLOC
 # define MALLOC
 
+# define PAGESIZE 4096
+# include <stdbool.h>
 # include <sys/mman.h>
 
 typedef struct page
@@ -18,7 +20,7 @@ typedef struct mem_block
 	struct mem_block *next;
 }t_mem_block;
 
-void * malloc(void *adr, size_t size);
+void * malloc(size_t size);
 //void * realloc(void *adr, size_t size);
 //void * calloc(void *adr, size_t size);
 //void free(void *adr);
