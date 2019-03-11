@@ -86,7 +86,7 @@ void take_block(t_mem_block *current, size_t size)
 	}
 }
 
-void *test_free(size_t size, t_page *first_page, t_mem_block *first_block)
+void *find_free_block(size_t size, t_page *first_page, t_mem_block *first_block)
 {
 	bool searching = true;
 	t_page *test_page = first_page;
@@ -123,5 +123,5 @@ void *malloc(size_t size)
 	if (!(first_page->next))
 		return (create_first_page(first_page, first_block, size));
 	else
-		return (test_free(size, first_page, first_block));
+		return (find_free_block(size, first_page, first_block));
 }

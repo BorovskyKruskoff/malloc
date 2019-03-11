@@ -1,5 +1,6 @@
-malloc
+malloc.so
 objs/malloc.o
 objs/realloc.o
 objs/calloc.o
 objs/free.o
+how_test

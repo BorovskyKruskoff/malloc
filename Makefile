@@ -1,4 +1,4 @@
-EXEC		= malloc
+EXEC		= malloc.so
 SRC_PATH	= srcs
 SRC_NAME	= malloc.c
 SRC		= $(addprefix $(SRC_PATH)/,$(SRC_NAME))
