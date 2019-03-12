@@ -21,7 +21,8 @@ void *init_first_page(t_page *first, t_mem_block *first_block, size_t size)
 	size_t sizepage = sizeof(t_page);
 
 	mult = ((size + sizeblock + sizepage) / PAGESIZE) + 1;
-	first = mmap(first, PAGESIZE * mult, PROT_NONE,
+	first = mmap(NULL, PAGESIZE * mult,
+		PROT_WRITE | PROT_READ | PROT_EXEC,
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	first->next = first;
 	first->prev = first;
@@ -51,7 +52,8 @@ void *new_page(size_t size, t_page *old_page)
 	size_t sizepage = sizeof(t_page);
 
 	mult = ((size + sizeblock + sizepage) / PAGESIZE) + 1;
-	new_page = mmap(NULL, PAGESIZE * mult, PROT_NONE,
+	new_page = mmap(NULL, PAGESIZE * mult,
+		PROT_WRITE | PROT_READ | PROT_EXEC,
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	new_page->next = old_page->next;
 	new_page->prev = old_page;
@@ -129,12 +131,12 @@ void *malloc(size_t size)
 	write(1, "KF\n", 3);
 	if (!(first_page))
 	{
-		printf("First page\n");
+		write(1, "First\n", 6);
 		return (init_first_page(first_page, first_block, size));
 	}
 	else
 	{
-		printf("New page\n");
+		write(1, "New\n", 4);
 		return (find_free_block(size, first_page, first_block));
 	}
 }
