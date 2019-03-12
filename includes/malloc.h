@@ -1,7 +1,12 @@
 #ifndef MALLOC
 # define MALLOC
 
-# define PAGESIZE 4096
+# ifndef PAGESIZE
+#  define PAGESIZE 4096
+# endif
+
+# include <unistd.h>
+# include <stdio.h>
 # include <stdbool.h>
 # include <sys/mman.h>
 # include <stddef.h>

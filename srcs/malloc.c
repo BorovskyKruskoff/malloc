@@ -126,6 +126,7 @@ void *malloc(size_t size)
 	static t_mem_block *first_block;
 	static t_page *first_page;
 
+	write(1, "KF\n", 3);
 	if (!(first_page))
 	{
 		printf("First page\n");

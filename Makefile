@@ -1,4 +1,4 @@
-EXEC		= malloc.so
+EXEC		= malloc.a
 SRC_PATH	= srcs
 SRC_NAME	= malloc.c
 SRC		= $(addprefix $(SRC_PATH)/,$(SRC_NAME))
@@ -8,7 +8,7 @@ OBJ		= $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 DEPS_PATH	= includes
 INCLUDE		= $(addprefix -I,$(DEPS_PATH))
 MLXFLAGS	=
-FLAGS		= -Werror -Wextra -Wall -std=gnu99 -g -shared -fPIC
+FLAGS		= -Werror -Wextra -Wall -std=gnu99 -g -c
 CFLAGS		= $(FLAGS) $(MLXFLAGS)
 LDFLAGS		=
 CC		= gcc
@@ -16,13 +16,17 @@ CC		= gcc
 all: $(OBJ_PATH) $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+	ar rcs $@ $^
 
 $(OBJ_PATH):
 	mkdir $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(INCLUDE)
+
+test: all
+	gcc -g -Wall -Werror -Wextra tests/test.c malloc.a
+	./a.out
 
 clean:
 	rm -fv $(OBJ)
