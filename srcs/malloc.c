@@ -1,5 +1,6 @@
 #include "malloc.h"
 
+//creates a free block
 void init_block(void *adr, size_t size, void *next, void *prev)
 {
 	t_mem_block *block = adr;
@@ -12,6 +13,7 @@ void init_block(void *adr, size_t size, void *next, void *prev)
 	block->prev->next = block;
 }
 
+//fills every field in the first page and its first block, and mmaps
 void *init_first_page(t_page *first, t_mem_block *first_block, size_t size)
 {
 	size_t mult = 1;
@@ -39,6 +41,7 @@ void *init_first_page(t_page *first, t_mem_block *first_block, size_t size)
 	return (first_block + sizeblock);
 }
 
+//creates a new page and its first block, and mmaps it
 void *new_page(size_t size, t_page *old_page)
 {
 	t_mem_block *new_block;
@@ -70,6 +73,7 @@ void *new_page(size_t size, t_page *old_page)
 	return (new_block + sizeblock);
 }
 
+//occupy a free block with enough space
 void take_block(t_mem_block *current, size_t size)
 {
 	size_t sizeblock = sizeof(t_mem_block);
@@ -93,20 +97,24 @@ void *find_free_block(size_t size, t_page *first_page, t_mem_block *first_block)
 
 	while (searching)
 	{
+		//tests if block is free and big enough
 		if (test_block->size >= size && test_block->is_free)
 		{
 			take_block(test_block, size);
 			searching = false;
 			return (test_block + sizeof(t_mem_block));
 		}
+		//goes to next block
 		else if (test_block->next != start_block)
 			test_block = test_block->next;
+		//goes to next page
 		else if (test_page->next != first_page)
 		{
 			test_page = test_page->next;
 			start_block = (void *)(test_page + sizeof(t_page));
 			test_block = start_block;
 		}
+		//stops searching and creates a new page
 		else
 			searching = false;
 	}
@@ -118,8 +126,14 @@ void *malloc(size_t size)
 	static t_mem_block *first_block;
 	static t_page *first_page;
 
-	if (!(first_page->next))
+	if (!(first_page))
+	{
+		printf("First page\n");
 		return (init_first_page(first_page, first_block, size));
+	}
 	else
+	{
+		printf("New page\n");
 		return (find_free_block(size, first_page, first_block));
+	}
 }
