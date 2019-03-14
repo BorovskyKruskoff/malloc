@@ -1,4 +1,6 @@
-EXEC		= malloc.a
+EXEC		= malloc
+EXEC_STATIC	= $(addprefix $(EXEC),.a)
+EXEC_SHARED	= $(addprefix $(EXEC),.so)
 SRC_PATH	= srcs
 SRC_NAME	= malloc.c
 SRC		= $(addprefix $(SRC_PATH)/,$(SRC_NAME))
@@ -8,14 +10,14 @@ OBJ		= $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 DEPS_PATH	= includes
 INCLUDE		= $(addprefix -I,$(DEPS_PATH))
 MLXFLAGS	=
-FLAGS		= -Werror -Wextra -Wall -std=gnu99 -g
+FLAGS		= -c -Werror -Wextra -Wall -std=gnu99 -g
 CFLAGS		= $(FLAGS) $(MLXFLAGS)
 LDFLAGS		=
 CC		= gcc
 
-all: $(OBJ_PATH) $(EXEC)
+all: $(OBJ_PATH) $(EXEC_STATIC)
 
-$(EXEC): $(OBJ)
+$(EXEC_STATIC): $(OBJ)
 	ar rcs $@ $^
 
 $(OBJ_PATH):
@@ -24,7 +26,12 @@ $(OBJ_PATH):
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(INCLUDE)
 
-test: all
+static: $(OBJ_PATH) $(EXEC_SHARED)
+
+$(EXEC_SHARED): $(OBJ)
+	$(CC) -o $(EXEC_SHARED) $^ $(CFLAGS)-shared -fPIC
+
+test:
 	gcc -g -Wall -Werror -Wextra tests/test.c malloc.a
 	./a.out
 
